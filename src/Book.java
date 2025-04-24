@@ -11,16 +11,36 @@ public class Book {
 
     public boolean isAvailable() { return isAvailable; }
 
-    public synchronized boolean borrow() {
-        if (isAvailable) {
-            isAvailable = false;
-            return true;
+    public synchronized void borrow(String userName) {
+        while (!isAvailable) {
+            try {
+                System.out.println(userName + " ждёт книгу " + title);
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
-        return false;
+
+        //Книга доступна - можно взять
+        isAvailable = false;
+        System.out.println(userName + " взял книгу: " + title);
     }
 
-    public synchronized void returnBook() {
+    public synchronized void returnBook(String userName) {
         isAvailable = true;
+        System.out.println(userName + " вернул книгу: " + title);
+
+        notifyAll();
+    }
+
+    public void read(String userName) {
+        try {
+            int readingTime = 2000;
+            System.out.println(userName + " читает книгу: " + title + " (" + readingTime + " ms)");
+            Thread.sleep(readingTime);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override

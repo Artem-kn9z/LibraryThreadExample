@@ -11,10 +11,13 @@ public class Main {
 
         Library library = new Library(books);
 
-        // Несколько пользователей хотят одну и ту же книгу
-        UserThread user1 = new UserThread("Java", library, "Пользователь 1");
-        UserThread user2 = new UserThread("Java", library, "Пользователь 2");
-        UserThread user3 = new UserThread("Python", library, "Пользователь 3");
+        UserThread user1 = new UserThread("Java", library);
+        UserThread user2 = new UserThread("Python", library);
+        UserThread user3 = new UserThread("C++", library);
+
+        user1.setName("Пользователь 1");
+        user2.setName("Пользователь 2");
+        user3.setName("Пользователь 3");
 
         user1.start();
         user2.start();
@@ -32,3 +35,4 @@ public class Main {
         library.showAllBooks();
     }
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

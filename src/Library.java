@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Library {
     private List<Book> books;
@@ -9,10 +7,11 @@ public class Library {
         this.books = books;
     }
 
-    public synchronized Optional<Book> findAvaiableBook(String title) {
+    public Book findBook(String title) {
         return books.stream()
-                .filter(b -> b.getTitle().equalsIgnoreCase(title) && b.isAvailable())
-                .findFirst();
+                .filter(b -> b.getTitle().equalsIgnoreCase(title))
+                .findFirst()
+                .orElse(null);
     }
 
     public synchronized void showAllBooks() {
